@@ -113,8 +113,6 @@ public class HuffmanCoding {
     public static ArrayList<CharFreq> makeSortedList(String filename) {
         StdIn.setFile(filename);
         String input = StdIn.readAll();
-        //.replaceAll(" ", "")
-        //input = input.replaceAll("\r\n+", "");
         ArrayList<CharFreq> arr = new ArrayList<CharFreq>();
         
         
@@ -132,7 +130,6 @@ public class HuffmanCoding {
                 arr.set((int) x, tmp);
             }
         }
-        //System.out.println(arr.get(77).getCharacter() + " " + arr.get(77).getProbOccurrence()/input.length());
         for(int i = 0; i < arr.size(); i++){
             if(arr.get(i).getCharacter() == null){
                 arr.remove(i);
@@ -160,46 +157,6 @@ public class HuffmanCoding {
         }
 
         Collections.sort(arr);
-
-        
-
-        /*
-        ArrayList<CharFreq> arr = new ArrayList<CharFreq>();
-        String input = StdIn.readAll().replaceAll(" ", "");
-        input = input.replaceAll("\r\n+", "");
-        char[] arrChr = input.toCharArray();
-        //System.out.println(arrChr.length);
-        double freqNum = 1.0/arrChr.length;
-        arr.add(new CharFreq(arrChr[0], freqNum));
-        //System.out.println(input);
-
-        for(int i = 1; i < arrChr.length; i++){
-            for(int j = 0; j < arr.size(); j++){
-                CharFreq tmp = arr.get(j);
-                if(tmp.getCharacter().equals(arrChr[i])){
-                    arr.get(j).setProbOccurrence(arr.get(j).getProbOccurrence() + freqNum);
-                    break;
-                }
-                else if(j == arr.size() - 1){
-                    arr.add(new CharFreq(arrChr[i], freqNum));
-                    break;
-                }
-            }
-        }
-        Collections.sort(arr);
-        
-        for(int i = 0; i < arr.size(); i++){
-            if(arr.get(i).getProbOccurrence() < 0.005){
-                arr.remove(i);
-                i = i - 1;
-                continue;
-            }
-            else{
-                double prob = arr.get(i).getProbOccurrence();
-                arr.get(i).setProbOccurrence(Math.round(prob * 100) / 100.0);
-            }
-        }
-        */
         
         return arr;
     }
@@ -224,52 +181,10 @@ public class HuffmanCoding {
             return source.dequeue();
         }
 
-        /*
-        while(!source.isEmpty() || target.size() != 1){
-
-            if(source.isEmpty() && !target.isEmpty()){
-                TreeNode one = source.dequeue();
-                TreeNode two = source.dequeue();
-                TreeNode parent = new TreeNode();
-    
-                if(one.getData().getProbOccurrence() > two.getData().getProbOccurrence()){
-                    parent.setLeft(two);
-                    parent.setRight(one);
-                } else if(one.getData().getProbOccurrence() <= two.getData().getProbOccurrence()){
-                    parent.setLeft(one);
-                    parent.setRight(two);
-                }
-    
-                CharFreq tmp = new CharFreq();
-                tmp.setCharacter(null);
-                tmp.setProbOccurrence(one.getData().getProbOccurrence() + two.getData().getProbOccurrence());
-                parent.setData(tmp);
-                target.enqueue(parent);
-            } else if(!source.isEmpty() && target.isEmpty()){
-                TreeNode parent = new TreeNode();
-                parent.setLeft(source.dequeue());
-                parent.setRight(source.dequeue());
-            } else if(!source.isEmpty() && !target.isEmpty()){
-                TreeNode parent = new TreeNode();
-                TreeNode one = source.dequeue();
-                TreeNode tarTmp = target.dequeue();
-                if(one.getData().getProbOccurrence() > tarTmp.getData().getProbOccurrence()){
-                    parent.setLeft(tarTmp);
-                } else if(!target.isEmpty() && !source.isEmpty() && one.getData().getProbOccurrence() > tarTmp.getData().getProbOccurrence()){
-                    parent.setRight(tarTmp);
-                }
-                parent.getData().setProbOccurrence(one.getData().getProbOccurrence() + tarTmp.getData().getProbOccurrence());
-
-            }
-            
-        }
-        */
-
         while(!source.isEmpty() || target.size() != 1){
             TreeNode parent = new TreeNode(new CharFreq(null, 0), null, null);
             for(int i = 0; i < 2; i++){
                 if(target.isEmpty()){
-                    //i = 0 ? treeTmp.setLeft(source.dequeue()) : treeTmp.setRight(source.dequeue());;
                     if(i != 0){
                         parent.setRight(source.dequeue());
                     } else{
@@ -310,39 +225,8 @@ public class HuffmanCoding {
             target.enqueue(parent);
         }
         
-        /*
-        while(source.size() != 0){
-            if(source.size() == 1){
-                TreeNode one = source.dequeue();
-                TreeNode tmp = new TreeNode(new CharFreq(null, one.getData().getProbOccurrence()), one, null);
-                target.enqueue(tmp);
-                break;
-            }
-            TreeNode one = source.dequeue();
-            TreeNode two = source.dequeue();
-            double probComb = one.getData().getProbOccurrence() + two.getData().getProbOccurrence();
-            TreeNode tmp = new TreeNode(new CharFreq(null, probComb), one, two);
-            target.enqueue(tmp);
-        }
-        while(target.size() != 1){
-            //System.out.println(target.size());
-            if(target.size() == 1){
-
-            }
-            TreeNode curr = combine(target.dequeue(), target.dequeue());
-            target.enqueue(curr);
-
-        }
-        */
         return target.dequeue();
     }
-
-    /*
-    public static TreeNode combine(TreeNode one, TreeNode two){
-        //System.out.println(one.getData().getProbOccurrence() + " " + two.getData().getProbOccurrence());
-        return (new TreeNode(new CharFreq(null, one.getData().getProbOccurrence() + two.getData().getProbOccurrence()), one, two));
-    }
-    */
 
     /**
      * Uses a given huffman coding tree to create a string array of size 128, where each
