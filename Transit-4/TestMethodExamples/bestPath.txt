@@ -1,0 +1,29 @@
+Enter a layered list input file => input2.txt
+
+What method would you like to test?
+1. makeList
+2. removeStation
+3. addStop
+4. bestPath
+5. duplicate
+6. addScooter
+Enter a number => 4
+
+Layered Linked List:
+0------->3---------->7------------------->13--------------------->19
+|        |           |                    |                       | 
+0---->2->3---->5---->7----------->11----->13------------->17----->19------------->23
+|     |  |     |     |            |       |               |       |               |
+0->1->2->3->4->5->6->7->8->9->10->11->12->13->14->15->16->17->18->19->20->21->22->23->24->25
+
+Enter a destination => 18
+
+Best path:
+0>>>>>>>>3>>>>>>>>>>>7>>>>>>>>>>>>>>>>>>>>13
+                                          V
+                                          13>>>>>>>>>>>>>>17
+                                                          V
+                                                          17>>18
+
+Values of nodes in your best path:
+{ 0 3 7 13 13 17 17 18 }
